@@ -190,13 +190,7 @@ public class BookmarkDao {
 		Collection<Bookmark> result = new ArrayList<>();
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver"); //loads driver and register with the jsp api
-			// new com.mysql.jdbc.Driver();
-			// OR
-			// System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
-
-			// OR java.sql.DriverManager
-			// DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			Class.forName("com.mysql.cj.jdbc.Driver"); //loads driver and register with the jsp api
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -210,7 +204,9 @@ public class BookmarkDao {
 				query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, "
 						+ "amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and "
 						+ "b.id NOT IN (select ub.book_id from User u, User_Book ub where u.id = " + userId
-						+ " and u.id = ub.user_id) group by b.id"; //nested query to get all the books the users has queried
+						+ " and u.id = ub.user_id) group by b.id"; 
+				//Get all books by this users, where u.id
+				//nested query to get all the books the users has queried
 			} /*
 				 * else { query =
 				 * "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, "

@@ -19,7 +19,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/sonol/Downloads/_workspace/_repositories/local/eclipse/external_lib/apache-tomcat-9.0.21/lib/servlet-api.jar">
+	<classpathentry kind="lib" path="C:/Users/sonol/Downloads/_workspace/_repositories/local/eclipse/external_lib/servlet-api.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
