@@ -47,4 +47,10 @@ public class UserManager {
 	public List<User> getUsers() {
 		return dao.getUser();
 	}
+
+	public User getUser(long userId) {
+		// TODO Auto-generated method stub
+		
+		return dao.getUser(userId);
+	}
 }

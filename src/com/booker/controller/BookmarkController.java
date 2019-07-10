@@ -4,17 +4,19 @@ import com.booker.constants.KidFriendlyStatusEnum;
 import com.booker.entities.Bookmark;
 import com.booker.entities.User;
 import com.booker.managers.BookmarkManager;
+import com.booker.managers.UserManager;
 
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/bookmark")
+@WebServlet(urlPatterns = {"/bookmark", "/boomark/save", "/bookmark/mybooks"})
 //This will be a singleton
 public class BookmarkController extends HttpServlet {
 	// Don't because tomecat will create a singleton of the servlet
@@ -34,10 +36,36 @@ public class BookmarkController extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(false, 5); //fetch bookmark from model 
-		request.setAttribute("books", list);
 		
-		request.getRequestDispatcher("/browse.jsp").forward(request, response); //forward bookmark to the view
+		RequestDispatcher dispatcher = null;
+		System.out.println("Servlet path: " + request.getServletPath());
+	
+		if(request.getServletPath().contains("save")) {
+			// save
+			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
+			
+			String bid = request.getParameter("bid");
+			
+			// Get data from Database
+			
+			User user = UserManager.getInstance().getUser(5);
+			
+		} else if (request.getServletPath().contains("mybooks")) {
+			// mybooks
+			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
+			
+			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, 5); //fetch all bookmark from model 
+			request.setAttribute("books", list);
+			
+		} else {
+			dispatcher = request.getRequestDispatcher("/browse.jsp");
+			
+			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(false, 5); //fetch only bookmarks bookmarked by user  from model 
+			request.setAttribute("books", list);
+			
+		}
+		
+		dispatcher.forward(request, response);
 	}
 
 	/**

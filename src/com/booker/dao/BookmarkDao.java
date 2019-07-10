@@ -1,12 +1,10 @@
 package com.booker.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -202,23 +200,22 @@ public class BookmarkDao {
 									 */
 				Statement stmt = conn.createStatement();) /* execute mysql queries */ {
 
-			// String query = "";
+			String query = "";
 			if (!isBookmarked) { // !isBookmarked, we are getting the book not yet bookmarked by user
-				String query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating" 
+				query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating" 
 						+ "from Book b, Author a, Book_Author ba" 
 						+ "where b.id = ba.book_id and ba.author_id = a.id and b.id" 
 						+ "group by b.id;";
 
 				// Get all books by this user, where userId
 				// nested query to get all the books the users has queried
-			} /*
-				 * else { query =
-				 * "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, "
-				 * +
-				 * "amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and "
-				 * + "b.id IN (select ub.book_id from User u, User_Book ub where u.id = " +
-				 * userId + " and u.id = ub.user_id) group by b.id"; }
-				 */
+			} else { query =
+				  "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, "
+				 +
+				 "amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and "
+				  + "b.id IN (select ub.book_id from User u, User_Book ub where u.id = " +
+				 userId + " and u.id = ub.user_id) group by b.id"; }
+				
 
 			ResultSet rs = stmt.executeQuery(query);
 
