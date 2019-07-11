@@ -130,4 +130,8 @@ public class BookmarkManager {
 	public Collection<Bookmark> getBooks(boolean isBookmarked, long id) { //long instead of int because Bookmark ID is long
 		return dao.getBooks(isBookmarked, id);
 	}
+
+	public Bookmark getBook(long bid) {
+		return dao.getBook(bid);
+	}
 }

@@ -21,7 +21,7 @@
 	<div style="font-size: 24px;color: #333333;padding: 15px 0px 0px;border-bottom: #333333 1px solid;clear: both;">Saved Items</div>
 	<br><br>
 	    
-    <c:choose> 
+    <c:choose>
 		<c:when test="${!empty(books)}">
 			<table>
 			   <c:forEach var = "book" items="${books}">

@@ -202,20 +202,23 @@ public class BookmarkDao {
 
 			String query = "";
 			if (!isBookmarked) { // !isBookmarked, we are getting the book not yet bookmarked by user
-				query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating" 
-						+ "from Book b, Author a, Book_Author ba" 
-						+ "where b.id = ba.book_id and ba.author_id = a.id and b.id" 
-						+ "group by b.id;";
+//				query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating" 
+//						+ "from Book b, Author a, Book_Author ba" 
+//						+ "where b.id = ba.book_id and ba.author_id = a.id and b.id" 
+//						+ "group by b.id";
+				query = "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, " +
+						"amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and " + 
+						"b.id NOT IN (select ub.book_id from User u, User_Book ub where u.id = " + userId +
+						" and u.id = ub.user_id) group by b.id";
 
 				// Get all books by this user, where userId
 				// nested query to get all the books the users has queried
 			} else { query =
-				  "Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, "
-				 +
-				 "amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and "
-				  + "b.id IN (select ub.book_id from User u, User_Book ub where u.id = " +
-				 userId + " and u.id = ub.user_id) group by b.id"; }
-				
+					"Select b.id, title, image_url, publication_year, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, " +
+							"amazon_rating from Book b, Author a, Book_Author ba where b.id = ba.book_id and ba.author_id = a.id and " + 
+							"b.id IN (select ub.book_id from User u, User_Book ub where u.id = " + userId +
+							" and u.id = ub.user_id) group by b.id";
+			}
 
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -243,5 +246,47 @@ public class BookmarkDao {
 		}
 
 		return result;
+	}
+
+	public Bookmark getBook(long bookId) {
+		Book book = null;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver"); // loads driver and register with the jsp api
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booker?useSSL=false", "root",
+				"vCEyuK6md6UuoM"); /*
+									 * a) Database User Profile: root is who the user is b) Database user password
+									 */
+				Statement stmt = conn.createStatement();) /* execute mysql queries */ {
+
+			String query = "Select b.id, title, image_url, publication_year, p.name, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating, created_date"
+					+ " from Book b, Publisher p, Author a, Book_Author ba "
+					+ "where b.id = " + bookId + " and b.publisher_id = p.id and b.id = ba.book_id and ba.author_id = a.id group by b.id";
+	    	ResultSet rs = stmt.executeQuery(query);
+			
+	    	while (rs.next()) {
+	    		long id = rs.getLong("id");
+				String title = rs.getString("title");
+				String imageUrl = rs.getString("image_url");
+				int publicationYear = rs.getInt("publication_year");
+				String publisher = rs.getString("name");		
+				String[] authors = rs.getString("authors").split(",");			
+				int genre_id = rs.getInt("book_genre_id");
+				BookGenreEnum genre = BookGenreEnum.values()[genre_id];
+				double amazonRating = rs.getDouble("amazon_rating");
+				
+				System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + genre + ", amazonRating: " + amazonRating);
+	    		
+	    		book = BookmarkManager.getInstance().createBook(id, title, imageUrl, publicationYear, publisher, authors, genre, amazonRating/*, values[7]*/);
+	    	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return book;
 	}
 }

@@ -20,6 +20,7 @@ public class UserDao {
 		return DataStore.getUsers();
 	}
 	
+	// Fetch a single row from data base
 	public User getUser(long userId) {
 		User user = null;
 		try {

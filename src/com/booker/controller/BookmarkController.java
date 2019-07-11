@@ -40,24 +40,32 @@ public class BookmarkController extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		System.out.println("Servlet path: " + request.getServletPath());
 	
-		if(request.getServletPath().contains("save")) {
+		if(request.getServletPath().contains("save")) { //If the users click on save
 			// save
 			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
 			
-			String bid = request.getParameter("bid");
+			String bid = request.getParameter("bid"); //book id
 			
 			// Get data from Database
-			
 			User user = UserManager.getInstance().getUser(5);
+			Bookmark bookmark = BookmarkManager.getInstance().getBook(Long.parseLong(bid));
 			
-		} else if (request.getServletPath().contains("mybooks")) {
+			// Save user bookmark
+			BookmarkManager.getInstance().saveUserBookmark(user, bookmark);
+			
+			// Get all the bookmark the user bookmark
+			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, 5); //fetch all bookmark from model 
+			request.setAttribute("books", list);
+			
+			
+		} else if (request.getServletPath().contains("mybooks")) { //If the users click on mybooks
 			// mybooks
 			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
 			
 			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, 5); //fetch all bookmark from model 
 			request.setAttribute("books", list);
 			
-		} else {
+		} else { //If the users click on browse
 			dispatcher = request.getRequestDispatcher("/browse.jsp");
 			
 			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(false, 5); //fetch only bookmarks bookmarked by user  from model 

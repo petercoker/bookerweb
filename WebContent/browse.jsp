@@ -17,8 +17,7 @@
 			</b>
 		</div>
 	</div>
-	<br>
-	<br>
+	<br><br>
 
 	<table>
 	    <!-- iterating through books -->
