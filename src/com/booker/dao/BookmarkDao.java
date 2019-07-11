@@ -248,6 +248,7 @@ public class BookmarkDao {
 		return result;
 	}
 
+	//load single book from the database
 	public Bookmark getBook(long bookId) {
 		Book book = null;
 		

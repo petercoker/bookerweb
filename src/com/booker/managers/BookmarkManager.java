@@ -131,7 +131,7 @@ public class BookmarkManager {
 		return dao.getBooks(isBookmarked, id);
 	}
 
-	public Bookmark getBook(long bid) {
+	public Bookmark getBook(long bid) { //used "bookmark" the super type instead book
 		return dao.getBook(bid);
 	}
 }
