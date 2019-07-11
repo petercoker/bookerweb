@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/bookmark", "/boomark/save", "/bookmark/mybooks"})
+@WebServlet(urlPatterns = {"/bookmark", "/bookmark/save", "/bookmark/mybooks"})
 //This will be a singleton
 public class BookmarkController extends HttpServlet {
 	// Don't because tomecat will create a singleton of the servlet

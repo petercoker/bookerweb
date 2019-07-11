@@ -9,7 +9,7 @@
 <body style="font-family: Arial; font-size: 20px;">
 	<div style="height:65px;align:center;background:#DB5227;font-family: Arial;color: white;"">
 		<br><b>
-		<a href="" style="font-family:garamond;font-size:34px;margin:0px 0px 0px 10px;color:white;text-decoration: none;">thrill.io</a></b>
+		<a href="" style="font-family:garamond;font-size:34px;margin:0px 0px 0px 10px;color:white;text-decoration: none;">Booker.ie</a></b>
 		
 		<div style="height:25px;background: #DB5227;font-family: Arial;color: white;">
 			<b>
