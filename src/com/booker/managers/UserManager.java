@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.booker.dao.UserDao;
 import com.booker.entities.User;
+import com.booker.util.StringUtil;
 import com.booker.constants.GenderEnum;
 import com.booker.constants.UserTypeEnum;
 
@@ -50,5 +51,9 @@ public class UserManager {
 
 	public User getUser(long userId) {
 		return dao.getUser(userId);
+	}
+
+	public long authenticate(String email, String password) {
+		return dao.authenticate(email, StringUtil.encodePassword(password));
 	}
 }

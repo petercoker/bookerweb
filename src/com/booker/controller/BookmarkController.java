@@ -40,36 +40,44 @@ public class BookmarkController extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		System.out.println("Servlet path: " + request.getServletPath());
 	
-		if(request.getServletPath().contains("save")) { //If the users click on save
-			// save
-			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
+		if(request.getSession().getAttribute("userId") != null) {
 			
-			String bid = request.getParameter("bid"); //book id
-			
-			// Get data from Database
-			User user = UserManager.getInstance().getUser(5);
-			Bookmark bookmark = BookmarkManager.getInstance().getBook(Long.parseLong(bid));
-			
-			// Save user bookmark
-			BookmarkManager.getInstance().saveUserBookmark(user, bookmark);
-			
-			// Get all the bookmark the user bookmark
-			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, 5); //fetch all bookmark from model 
-			request.setAttribute("books", list);
-			
-			
-		} else if (request.getServletPath().contains("mybooks")) { //If the users click on mybooks
-			// mybooks
-			dispatcher = request.getRequestDispatcher("/mybooks.jsp");
-			
-			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, 5); //fetch all bookmark from model 
-			request.setAttribute("books", list);
-			
-		} else { //If the users click on browse
-			dispatcher = request.getRequestDispatcher("/browse.jsp");
-			
-			Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(false, 5); //fetch only bookmarks bookmarked by user  from model 
-			request.setAttribute("books", list);
+			long userId = (long)request.getSession().getAttribute("userId"); //type cast the object to long
+		
+			if(request.getServletPath().contains("save")) { //If the users click on save
+				// save
+				dispatcher = request.getRequestDispatcher("/mybooks.jsp");
+				
+				String bid = request.getParameter("bid"); //book id
+				
+				// Get data from Database
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getBook(Long.parseLong(bid));
+				
+				// Save user bookmark
+				BookmarkManager.getInstance().saveUserBookmark(user, bookmark);
+				
+				// Get all the bookmark the user bookmark
+				Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, userId); //fetch all bookmark from model 
+				request.setAttribute("books", list);
+				
+				
+			} else if (request.getServletPath().contains("mybooks")) { //If the users click on mybooks
+				// mybooks
+				dispatcher = request.getRequestDispatcher("/mybooks.jsp");
+				
+				Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(true, userId); //fetch all bookmark from model 
+				request.setAttribute("books", list);
+				
+			} else { //If the users click on browse
+				dispatcher = request.getRequestDispatcher("/browse.jsp");
+				
+				Collection<Bookmark> list  = BookmarkManager.getInstance().getBooks(false, userId); //fetch only bookmarks bookmarked by user  from model 
+				request.setAttribute("books", list);
+				
+			}
+		}else {
+			dispatcher = request.getRequestDispatcher("/login.jsp");
 			
 		}
 		
@@ -79,10 +87,10 @@ public class BookmarkController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		doGet(request, response);
-//	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 	// From Controller, Bookmark is invoked through the method manager class
 	public void saveUserBookMark(User user, Bookmark bookmark) {

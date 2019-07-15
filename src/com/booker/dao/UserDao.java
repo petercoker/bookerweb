@@ -56,4 +56,28 @@ public class UserDao {
 		return user;
 		
 	}
+
+	public long authenticate(String email, String password) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booker?useSSL=false", "root",
+				"vCEyuK6md6UuoM"); /* a) Database User Profile: root is who the user is b) Database user password */
+				Statement stmt = conn.createStatement();) /* execute mysql queries */ {	
+			String query = "Select id from User where email = '" + email + "' and password = '" + password + "'";
+			System.out.println("query: " + query);
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while (rs.next()) {
+				return rs.getLong("id");				
+	    	}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+		return -1;
+	}
 }
