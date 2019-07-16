@@ -57,7 +57,7 @@ public class UserDao {
 		
 	}
 
-	public long authenticate(String email, String password) {
+	public long authenticate(String email, String encodePassword) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -67,7 +67,7 @@ public class UserDao {
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booker?useSSL=false", "root",
 				"vCEyuK6md6UuoM"); /* a) Database User Profile: root is who the user is b) Database user password */
 				Statement stmt = conn.createStatement();) /* execute mysql queries */ {	
-			String query = "Select id from User where email = '" + email + "' and password = '" + password + "'";
+			String query = "Select id from User where email = '" + email + "' and password = '" + encodePassword + "'";
 			System.out.println("query: " + query);
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -82,4 +82,30 @@ public class UserDao {
 		// if the user id not there return -1 (authority failed)
 		return -1;
 	}
+	
+//	public long authenticate(String email, String password) {
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booker?useSSL=false", "root",
+//				"vCEyuK6md6UuoM"); /* a) Database User Profile: root is who the user is b) Database user password */
+//				Statement stmt = conn.createStatement();) /* execute mysql queries */ {	
+//			String query = "Select id from User where email = '" + email + "' and password = '" + password + "'";
+//			System.out.println("query: " + query);
+//			ResultSet rs = stmt.executeQuery(query);
+//			
+//			while (rs.next()) {
+//				// if the user id is there get it
+//				return rs.getLong("id");				
+//	    	}			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}	
+//		
+//		// if the user id not there return -1 (authority failed)
+//		return -1;
+//	}
 }

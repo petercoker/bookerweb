@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.booker.dao.UserDao;
 import com.booker.entities.User;
+import com.booker.util.BasicCrypto;
+import com.booker.util.ICrypto;
 import com.booker.util.StringUtil;
 import com.booker.constants.GenderEnum;
 import com.booker.constants.UserTypeEnum;
@@ -54,7 +56,11 @@ public class UserManager {
 	}
 
 	public long authenticate(String email, String password) {
+		ICrypto crypto = new BasicCrypto();
+		String encodePassword = new String(crypto.encrypt(password.getBytes()));
+		//String dec = new String(crypto.decrypt(enc.getBytes()));
+	
 		//return dao.authenticate(email, StringUtil.encodePassword(password));  // encrypt password
-		return dao.authenticate(email, password);
+		return dao.authenticate(email, encodePassword);
 	}
 }

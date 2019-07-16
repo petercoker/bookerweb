@@ -6,6 +6,8 @@ import com.booker.entities.Bookmark;
 import com.booker.entities.User;
 import com.booker.managers.BookmarkManager;
 import com.booker.managers.UserManager;
+import com.booker.util.BasicCrypto;
+import com.booker.util.ICrypto;
 import com.booker.bgjobs.WebpageDownloaderTask;
 
 public class Launch {
@@ -50,9 +52,20 @@ public class Launch {
 	}
 	
 	public static void main(String[] args) {
-		loadData();
-		startBookmarking();
+//		loadData();
+//		startBookmarking();
 //		runDownloaderJob(); //Backgroundd Jobs
+		
+		ICrypto crypto = new BasicCrypto();
+		String data = "Hello world";
+		String enc = new String(crypto.encrypt(data.getBytes()));
+		
+		String dec = new String(crypto.decrypt(enc.getBytes()));
+		
+		System.out.println("Original: " + data);
+		System.out.println("Encrypted: " + enc);
+		System.out.println("Decrypted: " + dec);
+	
 	}
 
 	private static void runDownloaderJob() {
