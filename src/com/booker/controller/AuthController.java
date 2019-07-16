@@ -32,29 +32,35 @@ public class AuthController extends HttpServlet {
 		System.out.println("Servlet path: " + request.getServletPath());
 		
 		if (!request.getServletPath().contains("logout")) {
+			// log out
+			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 		
 			long userId = UserManager.getInstance().authenticate(email, password);
 			if(userId != -1) {
+				// if the user click on the user Id
+				
 				HttpSession session = request.getSession();
 				session.setAttribute("userId", userId);
 				
 				request.getRequestDispatcher("bookmark/mybooks").forward(request, response);;
 				
 			} else {
+				// Send the user back to login page
 				request.getRequestDispatcher("/login.jsp").forward(request, response);;
 			
 			}
 		
 		} else {
+			// if the user click on log out
 			request.getSession().invalidate();
+			//invaliate the sessison not to allow user to click on the back button to still login
 			request.getRequestDispatcher("/login.jsp").forward(request, response);;
 			
 		}
-	
+		
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

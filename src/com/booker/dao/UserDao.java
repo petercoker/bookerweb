@@ -72,12 +72,14 @@ public class UserDao {
 			ResultSet rs = stmt.executeQuery(query);
 			
 			while (rs.next()) {
+				// if the user id is there get it
 				return rs.getLong("id");				
 	    	}			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
 		
+		// if the user id not there return -1 (authority failed)
 		return -1;
 	}
 }

@@ -54,7 +54,7 @@ public class UserManager {
 	}
 
 	public long authenticate(String email, String password) {
-		//return dao.authenticate(email, StringUtil.encodePassword(password));
+		//return dao.authenticate(email, StringUtil.encodePassword(password));  // encrypt password
 		return dao.authenticate(email, password);
 	}
 }

@@ -40,6 +40,7 @@ public class BookmarkController extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		System.out.println("Servlet path: " + request.getServletPath());
 	
+		// if the session is still valid
 		if(request.getSession().getAttribute("userId") != null) {
 			
 			long userId = (long)request.getSession().getAttribute("userId"); //type cast the object to long
@@ -77,6 +78,7 @@ public class BookmarkController extends HttpServlet {
 				
 			}
 		}else {
+			//end of session
 			dispatcher = request.getRequestDispatcher("/login.jsp");
 			
 		}
