@@ -56,11 +56,13 @@ public class UserManager {
 	}
 
 	public long authenticate(String email, String password) {
-		ICrypto crypto = new BasicCrypto();
-		String encodePassword = new String(crypto.encrypt(password.getBytes()));
+//		ICrypto crypto = new BasicCrypto();
+//		String encodePassword = new String(crypto.encrypt(password.getBytes()));
 		//String dec = new String(crypto.decrypt(enc.getBytes()));
-	
-		//return dao.authenticate(email, StringUtil.encodePassword(password));  // encrypt password
-		return dao.authenticate(email, encodePassword);
+		System.out.println("password: " + password);
+		return dao.authenticate(email, StringUtil.encodePassword(password));  // encrypt password
+		
+		
+//		return dao.authenticate(email, password);
 	}
 }

@@ -12,6 +12,7 @@ import com.booker.constants.GenderEnum;
 import com.booker.constants.UserTypeEnum;
 import com.booker.entities.User;
 import com.booker.managers.UserManager;
+import com.booker.util.StringUtil;
 
 public class UserDao {
 	
@@ -84,6 +85,7 @@ public class UserDao {
 	}
 	
 //	public long authenticate(String email, String password) {
+//		
 //		try {
 //			Class.forName("com.mysql.cj.jdbc.Driver");
 //		} catch (ClassNotFoundException e) {
@@ -93,9 +95,11 @@ public class UserDao {
 //		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booker?useSSL=false", "root",
 //				"vCEyuK6md6UuoM"); /* a) Database User Profile: root is who the user is b) Database user password */
 //				Statement stmt = conn.createStatement();) /* execute mysql queries */ {	
+//			
 //			String query = "Select id from User where email = '" + email + "' and password = '" + password + "'";
 //			System.out.println("query: " + query);
 //			ResultSet rs = stmt.executeQuery(query);
+//			
 //			
 //			while (rs.next()) {
 //				// if the user id is there get it
