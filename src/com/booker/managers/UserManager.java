@@ -56,7 +56,7 @@ public class UserManager {
 	}
 
 	public long authenticate(String email, String password) {
-//		ICrypto crypto = new BasicCrypto();
+		ICrypto crypto = new BasicCrypto();
 //		String encodePassword = new String(crypto.encrypt(password.getBytes()));
 //		String dec = new String(crypto.decrypt(enc.getBytes()));
 		
