@@ -31,18 +31,16 @@ public class AuthController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet path: " + request.getServletPath());
 		
-		
-		
-		if (request.getServletPath().contains("/auth")) {
+		if (!request.getServletPath().contains("logout")) {
 			// log out
 			
-			String email = request.getParameter("email"); 
+			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			 System.out.println("Get parameter email: " + email); // check get email
-		    System.out.println("Get parameter password: " + password); // check get email
-		    
-			long userId = UserManager.getInstance().authenticate(email, password);
 			
+			System.out.println("Get parameter email: " + email); // check get email
+		    System.out.println("Get parameter password: " + password); // check get passsword
+		
+			long userId = UserManager.getInstance().authenticate(email, password);
 			if(userId != -1) {
 				// if the user click on the user Id
 				
