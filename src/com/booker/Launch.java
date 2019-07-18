@@ -57,7 +57,7 @@ public class Launch {
 //		runDownloaderJob(); //Backgroundd Jobs
 		
 		ICrypto crypto = new BasicCrypto();
-		String data = "Hello world";
+		String data = "10";
 		String enc = new String(crypto.encrypt(data.getBytes()));
 		
 		String dec = new String(crypto.decrypt(enc.getBytes()));

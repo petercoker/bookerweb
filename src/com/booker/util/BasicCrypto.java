@@ -6,7 +6,7 @@ public class BasicCrypto implements ICrypto{
 	public byte[] encrypt(byte[] password) {
 		byte[] enc = new byte[password.length];
 		
-		for (int i = 0; i < password.length; i++) {
+	for (int i = 0; i < password.length; i++) {
 			// check if the value is even index 
 			// if its is add one to the value
 			// if it is not subtract one from the value
