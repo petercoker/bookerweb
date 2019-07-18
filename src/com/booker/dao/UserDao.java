@@ -58,8 +58,6 @@ public class UserDao {
 		
 	}
 	
-	
-
 	public long authenticate(String email, String encodePassword) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -88,7 +86,7 @@ public class UserDao {
 	
 //	public long authenticate(String email, String password) {
 //		
-//		try {
+//		try {     
 //			Class.forName("com.mysql.cj.jdbc.Driver");
 //		} catch (ClassNotFoundException e) {
 //			e.printStackTrace();
