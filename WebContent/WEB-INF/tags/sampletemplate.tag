@@ -8,15 +8,34 @@
 <title>${title }</title>
 </head>
 <body>
-	
-	<a href="https://www.w3schools.com">Visit W3Schools.com!</a>
-	<a href="index.jsp">Home</a>
-	<a href="aboutus.jsp">About us</a>
-	<a href="news.jsp">New</a>
-	<br>
-	<jsp:invoke fragment="content"></jsp:invoke>
-	<br>
-	Copyright booker.ie 2019
-	
+	<div style="height:65px;align: center;background: #DB5227;font-family: Arial;color: white;"">
+		<br><b>
+		<a href="" style="font-family:garamond;font-size:34px;margin:0 0 0 10px;color:white;text-decoration: none;">Booker.com</a></b>          
+	</div>
+	<br><br>
+	<form method="POST" action="<%=request.getContextPath()%>/auth">
+      <fieldset>
+	    <legend>Log In</legend>	    
+	    <table>
+	    	<tr>
+	    		<td><label>Email:</label></td>
+        		<td>
+        			<input type="text" name="email"><br>        			
+        		</td>
+        	</tr>
+        	<tr>
+        		<td><label>Password:</label></td>
+        		<td>
+        			<input type="password" name="password"><br>
+        		</td>        
+        	</tr>
+        	<tr>
+        		<td>&nbsp;</td>
+        		<td><input type="submit" name="submitLoginForm" value="Log In"></td>
+        	</tr>
+        </table>
+	  </fieldset>      
+    </form>
 </body>
-</html>
+</ht
+ml>
